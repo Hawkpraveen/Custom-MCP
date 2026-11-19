@@ -58,16 +58,16 @@ For web approval, open `http://127.0.0.1:8765/dashboard/` and sign in with `appr
 
 The tunnel must stay running. Claude Web connects to the public HTTPS address, not localhost. See [Claude's connector instructions](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) if your account's setup screens differ.
 
-## 4. Test Allow and Block
+## 4. Claude Desktop and Web test prompts
 
-In Claude Web, ask it to call the record note tool. Approve the first request in Guardian, then block the second:
+In either Claude app, ask it to call the discovered `record_note` tool. Approve the first request in Guardian, then block the second:
 
 ```text
-Use the Record note tool from Custom MCP Server to record exactly ALLOW-my-test-001. Call the tool; donâ€™t just describe it.
+Call the `record_note` tool to record exactly ALLOW-my-test-001. Call the tool; do not just describe it.
 ```
 
 ```text
-Use the Record note tool from Custom MCP Server to record exactly BLOCK-my-test-002. Call the tool; donâ€™t just describe it.
+Call the `record_note` tool to record exactly BLOCK-my-test-002. Call the tool; do not just describe it.
 ```
 
 Use unique note values on later runs. Check `.guardian/executions.jsonl`: the allowed note should appear; the blocked note should not.
