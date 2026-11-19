@@ -41,20 +41,58 @@ For web approval, open `http://127.0.0.1:8765/dashboard/` and sign in with `appr
 
 ### Claude Desktop
 
-1. In another terminal at the project root, run `python guardian.py desktop-config`.
-2. Merge the printed `mcpServers.guardian-demo` entry into Claude Desktop's `claude_desktop_config.json`. Keep any other entries.
-   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-3. Fully quit and restart Claude Desktop. Approve Guardian's `tools/list` request when it appears.
+**1. Generate the configuration entry**
+
+From a second terminal at the project root, run:
+
+```powershell
+python guardian.py desktop-config
+```
+
+**2. Add the entry**
+
+Merge the printed `mcpServers.guardian-demo` entry into Claude Desktop's config. Keep any other entries.
+
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+**3. Restart Claude Desktop**
+
+Fully quit and restart Claude Desktop. Approve Guardian's `tools/list` request when it appears.
 
 ### Claude Web
 
-1. Keep Guardian running. In a second terminal, start an authenticated HTTPS tunnel to port `8765` (for example, `ngrok http 8765`).
-2. Copy the tunnel's HTTPS address. From the project root, run `python guardian.py web-config --public-url https://YOUR-PUBLIC-HOST`.
-3. Open `.guardian/claude-web-connection.txt` locally. It contains the MCP URL and `Authorization` header; keep it private.
-4. In Claude, open **Customize â†’ Connectors â†’ Add custom connector**. Enter a name such as **Custom MCP Server** and the generated URL ending in `/mcp`.
-5. Choose **No sign-in** and add the generated `Authorization` request header. Guardian uses a fixed bearer token, not OAuth.
-6. Connect the new server and approve its `tools/list` request in Guardian.
+**1. Start an HTTPS tunnel**
+
+If ngrok is not installed and configured, follow its [Windows install and setup guide](https://ngrok.com/download/windows) first. Keep Guardian running, then start the tunnel in a second terminal:
+
+```powershell
+ngrok http 8765
+```
+
+If you have a reserved ngrok domain and want to use it instead of the automatically assigned URL, run:
+
+```powershell
+ngrok http 8765 --url https://YOUR-NAME.ngrok.app
+```
+
+**2. Generate connector details**
+
+Use the HTTPS address shown by ngrok, or the reserved address you specified with `--url`. From the project root, run:
+
+```powershell
+python guardian.py web-config --public-url https://YOUR-PUBLIC-HOST
+```
+
+For example, if you used `--url https://YOUR-NAME.ngrok.app`, pass `https://YOUR-NAME.ngrok.app` as `--public-url`. See ngrok's [URL and endpoint command guide](https://ngrok.com/docs/gateway/agent/cli#ngrok-http) for details.
+
+**3. Add the connector in Claude**
+
+Open `.guardian/claude-web-connection.txt` locally. It contains the MCP URL and `Authorization` header; keep it private. In Claude, open **Customize > Connectors > Add custom connector**. Enter a name such as **Custom MCP Server** and the generated URL ending in `/mcp`. Choose **No sign-in** and add the generated `Authorization` request header. Guardian uses a fixed bearer token, not OAuth.
+
+**4. Connect and approve**
+
+Connect the new server and approve its `tools/list` request in Guardian.
 
 The tunnel must stay running. Claude Web connects to the public HTTPS address, not localhost. See [Claude's connector instructions](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) if your account's setup screens differ.
 
@@ -80,7 +118,13 @@ From the project root:
 python -m unittest discover -s tests -v
 ```
 
-For frontend tests, run `npm test` from `src/guardian/ui/react/`.
+For frontend tests, run:
+
+```powershell
+Push-Location src/guardian/ui/react
+npm test
+Pop-Location
+```
 
 ## Keep credentials private
 

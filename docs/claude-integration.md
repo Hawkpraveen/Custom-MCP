@@ -23,17 +23,25 @@ Generated paths are specific to the current computer and Python interpreter. Reg
 
 ## Claude Web
 
-Claude's remote connector needs a public HTTPS endpoint on port 443; localhost alone cannot be reached from Anthropic's cloud. Start Guardian with either approval UI, then expose port `8765` with an authenticated tunnel such as ngrok:
+Claude's remote connector needs a public HTTPS endpoint on port 443; localhost alone cannot be reached from Anthropic's cloud. Start Guardian with either approval UI. If ngrok is not installed and configured, follow its [Windows install and setup guide](https://ngrok.com/download/windows). Then expose port `8765`:
 
 ```powershell
 ngrok http 8765
 ```
 
-Keep Guardian and the tunnel running. Generate connector details using the HTTPS host printed by the tunnel:
+For a reserved ngrok domain, you can set the public URL explicitly:
+
+```powershell
+ngrok http 8765 --url https://YOUR-NAME.ngrok.app
+```
+
+Use the HTTPS address ngrok prints, or the reserved address supplied with `--url`, in the command below. Keep Guardian and the tunnel running.
 
 ```powershell
 python guardian.py web-config --public-url https://YOUR-PUBLIC-HOST
 ```
+
+The public URL must match the tunnel URL, without a trailing `/mcp`. See ngrok's [URL and endpoint command guide](https://ngrok.com/docs/gateway/agent/cli#ngrok-http).
 
 Open `.guardian/claude-web-connection.txt` locally. It contains the MCP URL and bearer credential; keep it private. In Claude's custom connector:
 
