@@ -1,0 +1,30 @@
+﻿[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "walled-ai-mcp-guardian"
+version = "0.1.0"
+description = "Human approval gateway for Claude Desktop and remote MCP connectors"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = []
+
+[project.scripts]
+guardian = "guardian.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+guardian = ["ui/react/static/*.html", "ui/react/static/*.css", "ui/react/static/*.js"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+
+
+

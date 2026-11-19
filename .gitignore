@@ -1,0 +1,16 @@
+﻿.venv/
+# Private config, role tokens, execution ledger, and connector credentials.
+.guardian/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+*.log
+.env
+node_modules/
+src/guardian/ui/react/static/
+src/guardian/ui/react/.test-build/
+
+
+
