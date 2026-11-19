@@ -1,4 +1,4 @@
-# Walled AI MCP Guardian
+﻿# Custom MCP Guardian
 
 Guardian asks you to approve or block MCP requests before they reach an upstream server. Connect Claude Desktop by local stdio or Claude Web by a remote HTTPS connector. Choose one approval interface: Tkinter or the local web dashboard.
 
@@ -52,7 +52,7 @@ For web approval, open `http://127.0.0.1:8765/dashboard/` and sign in with `appr
 1. Keep Guardian running. In a second terminal, start an authenticated HTTPS tunnel to port `8765` (for example, `ngrok http 8765`).
 2. Copy the tunnel's HTTPS address. From the project root, run `python guardian.py web-config --public-url https://YOUR-PUBLIC-HOST`.
 3. Open `.guardian/claude-web-connection.txt` locally. It contains the MCP URL and `Authorization` header; keep it private.
-4. In Claude, open **Customize → Connectors → Add custom connector**. Enter a name such as **Custom MCP Server** and the generated URL ending in `/mcp`.
+4. In Claude, open **Customize â†’ Connectors â†’ Add custom connector**. Enter a name such as **Custom MCP Server** and the generated URL ending in `/mcp`.
 5. Choose **No sign-in** and add the generated `Authorization` request header. Guardian uses a fixed bearer token, not OAuth.
 6. Connect the new server and approve its `tools/list` request in Guardian.
 
@@ -63,11 +63,11 @@ The tunnel must stay running. Claude Web connects to the public HTTPS address, n
 In Claude Web, ask it to call the record note tool. Approve the first request in Guardian, then block the second:
 
 ```text
-Use the Record note tool from Custom MCP Server to record exactly ALLOW-my-test-001. Call the tool; don’t just describe it.
+Use the Record note tool from Custom MCP Server to record exactly ALLOW-my-test-001. Call the tool; donâ€™t just describe it.
 ```
 
 ```text
-Use the Record note tool from Custom MCP Server to record exactly BLOCK-my-test-002. Call the tool; don’t just describe it.
+Use the Record note tool from Custom MCP Server to record exactly BLOCK-my-test-002. Call the tool; donâ€™t just describe it.
 ```
 
 Use unique note values on later runs. Check `.guardian/executions.jsonl`: the allowed note should appear; the blocked note should not.
@@ -86,4 +86,5 @@ For frontend tests, run `npm test` from `src/guardian/ui/react/`.
 
 Do not share `.guardian/`, put tokens in screenshots, or expose the approval dashboard publicly. Guardian controls only traffic routed through it.
 
-More: [web dashboard](docs/web-dashboard.md) · [configuration](docs/configuration.md) · [troubleshooting](docs/troubleshooting.md).
+More: [web dashboard](docs/web-dashboard.md) Â· [configuration](docs/configuration.md) Â· [troubleshooting](docs/troubleshooting.md).
+
